@@ -7,8 +7,9 @@ import RSVP from 'rsvp';
 import $ from 'jquery';
 import { isNone } from '@ember/utils';
 import { set } from '@ember/object';
-import { A } from '@ember/array';
+import { A, isArray } from '@ember/array';
 import Builder from 'ember-flexberry-data/query/builder';
+import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
   Mixin for [Route](https://www.emberjs.com/api/ember/release/classes/Route) to support hierarchical mode into {{#crossLink "FlexberryObjectlistviewComponent"}}{{/crossLink}}.
@@ -32,6 +33,7 @@ export default Mixin.create({
     loadRecordsById(id, target, property, firstRunMode, recordParams) {
       let params = recordParams || {};
       let hierarchicalAttribute = params.hierarchicalAttribute || this.controllerFor(this.routeName).get('hierarchicalAttribute');
+      let sorting = deserializeSortingParam(params.sort || this.controllerFor(this.routeName).get('sort'));
       let modelName = params.modelName || this.get('modelName');
 
       if (firstRunMode) {
@@ -40,6 +42,13 @@ export default Mixin.create({
           .from(modelName)
           .selectByProjection(projectionName)
           .where(hierarchicalAttribute, 'eq', id);
+
+        if (isArray(sorting)) {
+          sorting = sorting.filter(i => i.direction !== 'none').map(i => `${i.propName} ${i.direction}`).join(',');
+          if (sorting) {
+            builder.orderBy(sorting);
+          }
+        }
 
         set(target, property, this.store.query(modelName, builder.build()));
       } else {

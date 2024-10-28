@@ -300,6 +300,7 @@ export default ListFormController.extend(SortableRouteMixin, PredicateFromFilter
     loadRecords(id, target, property, firstRunMode) {
       let params = {};
       params.hierarchicalAttribute = this.get('hierarchicalAttribute');
+      params.sort = this.get('sort');
       params.modelName = this.get('customPropertiesData.modelName');
       params.projectionName = this.get('customPropertiesData.modelProjection');
       this.send('loadRecordsById', id, target, property, firstRunMode, params);
