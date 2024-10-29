@@ -9,6 +9,7 @@ import { isNone } from '@ember/utils';
 import { set } from '@ember/object';
 import { A, isArray } from '@ember/array';
 import Builder from 'ember-flexberry-data/query/builder';
+import sortRecords from '../utils/sorting-function';
 import deserializeSortingParam from '../utils/deserialize-sorting-param';
 
 /**
@@ -68,6 +69,26 @@ export default Mixin.create({
           this.send('loadRecordsById', id, target, property, true, recordParams);
         } else {
           let recordsArrayinPromise = new RSVP.Promise((resolve) => {
+            for (let i = 0; i < sorting.length; i++) {
+              let sort = sorting[i];
+              if (i === 0) {
+                sortRecordsArray = sortRecords(sortRecordsArray, sort, 0, sortRecordsArray.length - 1);
+              } else {
+                let index = 0;
+                for (let j = 1; j < sortRecordsArray.length; j++) {
+                  for (let sortIndex = 0; sortIndex <  i; sortIndex++) {
+                    if (sortRecordsArray.objectAt(j).get(sorting[sortIndex].propName) !== sortRecordsArray.objectAt(j - 1).get(sorting[sortIndex].propName)) {
+                      sortRecordsArray = sortRecords(sortRecordsArray, sort, index, j - 1);
+                      index = j;
+                      break;
+                    }
+                  }
+                }
+      
+                sortRecordsArray = sortRecords(sortRecordsArray, sort, index, sortRecordsArray.length - 1);
+              }
+            }
+
             resolve(sortRecordsArray);
           });
 

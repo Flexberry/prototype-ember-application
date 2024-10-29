@@ -140,6 +140,7 @@ export default FlexberryBaseComponent.extend({
     set(key, value) {
       this.set('_recordsIsLoading', true);
       value.then((records) => {
+        this.get('_records').length = 0;
         records.forEach((record) => {
           let config = copy(this.get('defaultRowConfig'));
           let configurateRow = this.get('configurateRow');
@@ -235,6 +236,14 @@ export default FlexberryBaseComponent.extend({
     } else {
       this.set('_expanded', this.get('inExpandMode'));
     }
+  }),
+
+  /**
+    Observe sorting changes.
+  */
+  sortingObserver: observer('sorting', function() {
+    this.set('recordsLoaded', false);
+    this.set('_expanded', false);
   }),
 
   /**
