@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
+import sortRecords from 'ember-flexberry/utils/sorting-function';
 
 module('Acceptance | flexberry-groupedit | sort test', function(hooks) {
   setupApplicationTest(hooks);
@@ -53,48 +54,46 @@ module('Acceptance | flexberry-groupedit | sort test', function(hooks) {
       }));
     });
 
-    const flexberryGroupeditComponent = this.owner.lookup('component:flexberry-groupedit');
-
     try {
       let sortResult;
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 0, 4);
       specialArrayCompare(sortResult, [5, 4, 3, 2, 1], assert, 'sortRecords | address | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'desc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'desc' }, 0, 4);
       specialArrayCompare(sortResult, [1, 2, 3, 4, 5], assert, 'sortRecords | address | desc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'none' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'none' }, 0, 4);
       specialArrayCompare(sortResult, [1, 2, 3, 4, 5], assert, 'sortRecords | address | none');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'date', direction: 'asc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'date', direction: 'asc' }, 0, 4);
       specialArrayCompare(sortResult, [2, 5, 1, 4, 3], assert, 'sortRecords | date | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'date', direction: 'desc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'date', direction: 'desc' }, 0, 4);
       specialArrayCompare(sortResult, [3, 4, 1, 5, 2], assert, 'sortRecords | date | desc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'date', direction: 'none' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'date', direction: 'none' }, 0, 4);
       specialArrayCompare(sortResult, [3, 4, 1, 5, 2], assert, 'sortRecords | date | none');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'moderated', direction: 'asc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'moderated', direction: 'asc' }, 0, 4);
       specialArrayCompare(sortResult, [1, 4, 3, 5, 2], assert, 'sortRecords | boolean | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'moderated', direction: 'desc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'moderated', direction: 'desc' }, 0, 4);
       specialArrayCompare(sortResult, [4, 3, 5, 2, 1], assert, 'sortRecords | boolean | desc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'moderated', direction: 'none' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'moderated', direction: 'none' }, 0, 4);
       specialArrayCompare(sortResult, [4, 3, 5, 2, 1], assert, 'sortRecords | boolean | none');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'id', direction: 'asc' }, 0, 4);
+      sortResult = sortRecords(recordArray, { propName: 'id', direction: 'asc' }, 0, 4);
       specialArrayCompare(sortResult, [1, 2, 3, 4, 5], assert, 'sortRecords | id | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 1, 3);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 1, 3);
       specialArrayCompare(sortResult, [1, 4, 3, 2, 5], assert, 'sortRecords | partial sort | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 1, 4);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'asc' }, 1, 4);
       specialArrayCompare(sortResult, [1, 5, 4, 3, 2], assert, 'sortRecords | partial sort | asc');
 
-      sortResult = flexberryGroupeditComponent.sortRecords(recordArray, { propName: 'address', direction: 'desc' }, 0, 3);
+      sortResult = sortRecords(recordArray, { propName: 'address', direction: 'desc' }, 0, 3);
       specialArrayCompare(sortResult, [1, 3, 4, 5, 2], assert, 'sortRecords | partial sort | desc');
     } finally {
       run(() => {
