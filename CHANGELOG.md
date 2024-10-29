@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+## [3.14.0-beta.1] - 2024-10-29
+### Added
+* The `object-list-view` component:
+    * Apply sorting for hierarchycal records.
+
 ## [3.13.1] - 2024-10-21
 ### Fixed
 * The `flexberry-objectlistview` component:
