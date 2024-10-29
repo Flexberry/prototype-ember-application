@@ -1,6 +1,6 @@
 {
   "name": "ember-flexberry",
-  "version": "3.13.0",
+  "version": "3.14.0-beta.1",
   "dependencies": {
     "jquery-mockjax": "~2.2.1",
     "semantic-ui": "2.4.1",
