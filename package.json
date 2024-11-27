@@ -55,7 +55,7 @@
     "autoprefixer": "^6.3.1",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^2.4.5",
-    "dexie": "^2.0.2",
+    "dexie": "^3.2.2",
     "ember-ajax": "^3.0.0",
     "ember-block-slots": "1.1.11",
     "ember-browserify": "1.1.14",
